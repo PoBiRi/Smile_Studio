@@ -1,0 +1,58 @@
+.j {
+    stroke: #ff7362;
+  }
+
+  .j, .k, .l, .m, .n, .o {
+    fill: none;
+    stroke-linecap: round;
+  }
+
+  .j, .l, .p, .n, .o {
+    stroke-miterlimit: 10;
+  }
+
+  .j, .o {
+    stroke-width: 8.5px;
+  }
+
+  .k {
+    stroke: #435eff;
+  }
+
+  .k, .m {
+    stroke-linejoin: round;
+    stroke-width: 8px;
+  }
+
+  .l {
+    stroke-width: 2.2px;
+  }
+
+  .l, .n, .o {
+    stroke: #000;
+  }
+
+  .q {
+    fill: #ff7362;
+  }
+
+  .q, .r {
+    stroke-width: 0px;
+  }
+
+  .r {
+    fill: #000;
+  }
+
+  .p {
+    fill: #ffe266;
+    stroke-width: 2.5px;
+  }
+
+  .p, .m {
+    stroke: #ffe266;
+  }
+
+  .n {
+    stroke-width: 12px;
+  }
