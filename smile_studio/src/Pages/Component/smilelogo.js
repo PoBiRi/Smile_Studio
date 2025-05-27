@@ -13,7 +13,7 @@ function SmileLogo(props) {
     const dashOffset5 = useTransform(scrollY,[400, 500],[163, 0]);
     const dashOffset6 = useTransform(scrollY,[500, 625],[461, 0]);
     const dashOffset7 = useTransform(scrollY,[625, 750],[206, 0]);
-    const dashOffset8 = useTransform(scrollY,[750, 875],[197, 0]);
+    const dashOffset8 = useTransform(scrollY,[750, 875],[197, 0]); 
     const dashOffset9 = useTransform(scrollY,[875, 1000],[96, 0]);
     //small
     const dashOffset10 = useTransform(scrollY,[1000, 1020],[62, 0]);

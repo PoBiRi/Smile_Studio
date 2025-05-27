@@ -56,3 +56,11 @@
   .n {
     stroke-width: 12px;
   }
+
+  .line {
+    fill: none;
+    stroke: #000;
+    stroke-linecap: round;
+    stroke-miterlimit: 10;
+    stroke-width: 2.2px;
+  }

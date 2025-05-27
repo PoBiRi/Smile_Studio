@@ -5,6 +5,13 @@ function SmileLogoShadow(props) {
         <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 423.1 257.1"
+            style={{
+                position:'absolute',
+                width: '100%',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)'
+            }}
         >
             <g id="주황색그림자smile">
                 <path

@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from 'react';
 import styled from "styled-components";
 import { motion } from 'framer-motion';
 import SmileLogoShadow from './smilelogoshadow';
+import SmileLogoLine from './smilelogoLine';
 
 function MainCover() {
     const [scrollY, setScrollY] = useState(() => parseFloat(localStorage.getItem("scrollY")) || 0);
@@ -73,7 +74,8 @@ function MainCover() {
                     <SmileLogo/>
                     <Shadow 
                         circleSize={circleSize} 
-                        circleLeft={circleLeft}>
+                        circleLeft={circleLeft}
+                    >
                         <SmileLogoShadow/>
                     </Shadow>
                     
@@ -86,6 +88,9 @@ function MainCover() {
                             left: `${circleLeft}%`,
                         }}
                     />
+                    <LogoLineWrapper>
+                        <SmileLogoLine/>
+                    </LogoLineWrapper>
                 </LogoWrapper>
             </Center>
             <SidebarRight
@@ -101,7 +106,7 @@ const Container = styled.div`
     top: 0;
     left: 0;
     width: 100vw;
-    height: 100vh;
+    height: 200vh;
     display: flex;
     justify-content: space-between;
     background-color:rgb(0, 0, 0);
@@ -114,11 +119,20 @@ const Center = styled.div`
 
 const LogoWrapper = styled.div`
     position: relative;
-    top: 30%;
-    left: 50%;
-    width: 60%;
-    aspect-ratio: 165 / 100;
+    top: 25%;
+    left: 51.5%;
+    width: 57%;
+    aspect-ratio: 423.1 / 257.1;
     transform: translate(-50%, -50%);
+`;
+
+const LogoLineWrapper = styled.div`
+    position: absolute;
+    top: 19.5%;
+    transform: translateX(-50%);
+    left: 48.5%;
+    width: 173%;
+    aspect-ratio: 732.05 / 1259.83;
 `;
 
 const SidebarLeft = styled.div`
@@ -129,7 +143,7 @@ const SidebarLeft = styled.div`
     /* clip-path을 이용해 원과 겹친 부분을 잘라냄 */
     clip-path: ${(props) =>
         props.circleSize >= 0
-            ? `circle(${props.circleSize / 2}px at ${props.circlePosition.x}px ${props.circlePosition.y}px)`
+            ? `circle(${props.circleSize / 2 + 1}px at ${props.circlePosition.x}px ${props.circlePosition.y}px)`
             : 'none'};
 `;
 
@@ -156,9 +170,11 @@ const Circle = styled(motion.div)`
 `;
 
 const Shadow = styled.div`
+    width: 100%;
+    height: 100%;
     clip-path: ${(props) =>
         props.circleSize >= 0
-            ? `circle(${props.circleSize / 2 + 1}px at ${props.circleLeft}% ${31}%)`
+            ? `circle(${props.circleSize / 2}px at ${props.circleLeft}% ${31}%)`
             : 'none'};
 `
 
