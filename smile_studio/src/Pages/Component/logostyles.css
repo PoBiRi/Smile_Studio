@@ -1,66 +1,55 @@
-.j {
-    stroke: #ff7362;
-  }
 
-  .j, .k, .l, .m, .n, .o {
-    fill: none;
-    stroke-linecap: round;
-  }
+      .r {
+        stroke: #ff6759;
+      }
 
-  .j, .l, .p, .n, .o {
-    stroke-miterlimit: 10;
-  }
+      .r, .s, .t, .u, .v, .w {
+        stroke-miterlimit: 10;
+      }
 
-  .j, .o {
-    stroke-width: 8.5px;
-  }
+      .r, .t, .u, .x, .y, .v, .w {
+        fill: none;
+        stroke-linecap: round;
+      }
 
-  .k {
-    stroke: #435eff;
-  }
+      .r, .v {
+        stroke-width: 8.5px;
+      }
 
-  .k, .m {
-    stroke-linejoin: round;
-    stroke-width: 8px;
-  }
+      .s {
+        fill: #ffe049;
+        stroke-width: 2.5px;
+      }
 
-  .l {
-    stroke-width: 2.2px;
-  }
+      .s, .x {
+        stroke: #ffe049;
+      }
 
-  .l, .n, .o {
-    stroke: #000;
-  }
+      .t {
+        stroke-width: 2.2px;
+      }
 
-  .q {
-    fill: #ff7362;
-  }
+      .t, .u, .v, .w {
+        stroke: #000;
+      }
 
-  .q, .r {
-    stroke-width: 0px;
-  }
+      .u {
+        stroke-width: 2.2px;
+      }
 
-  .r {
-    fill: #000;
-  }
+      .x, .y {
+        stroke-linejoin: round;
+        stroke-width: 8px;
+      }
 
-  .p {
-    fill: #ffe266;
-    stroke-width: 2.5px;
-  }
+      .z {
+        fill: #ff6759;
+      }
 
-  .p, .m {
-    stroke: #ffe266;
-  }
+      .y {
+        stroke: #3b5fff;
+      }
 
-  .n {
-    stroke-width: 12px;
-  }
-
-  .line {
-    fill: none;
-    stroke: #000;
-    stroke-linecap: round;
-    stroke-miterlimit: 10;
-    stroke-width: 2.2px;
-  }
+      .w {
+        stroke-width: 12px;
+      }

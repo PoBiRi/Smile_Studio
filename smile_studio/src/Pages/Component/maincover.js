@@ -3,11 +3,11 @@ import { useState, useEffect, useRef } from 'react';
 import styled from "styled-components";
 import { motion } from 'framer-motion';
 import SmileLogoShadow from './smilelogoshadow';
-import SmileLogoLine from './smilelogoLine';
 
 function MainCover() {
     const [scrollY, setScrollY] = useState(() => parseFloat(localStorage.getItem("scrollY")) || 0);
     const [circleSize, setCircleSize] = useState(() => parseFloat(localStorage.getItem("circleSize")) || 0);
+    const [logoUpDown, setLogoUpDown] = useState(() => parseFloat(localStorage.getItem("logoUpDown")) || -12);
     //const [borderWidth, setBorderWidth] = useState(15);
     const [circleLeft, setCircleLeft] = useState(() => parseFloat(localStorage.getItem("circleLeft")) || 59.1);
     const [circlePosition, setCirclePosition] = useState(() => JSON.parse(localStorage.getItem("circlePosition")) || { x: 0, y: 0 });
@@ -27,10 +27,35 @@ function MainCover() {
         };
 
         const updateCircleSize = () => {
-            const scale = Math.max(0, Math.min((scrollY - 1400) / 1000, 3));
-            setCircleSize(scale * 1000);
-            localStorage.setItem("circleSize", scale * 1000);
+            const minScroll = 1500;
+            const maxScroll = 3000;
+
+            // 현재 스크롤 위치를 정규화 (0 ~ 1 사이 값)
+            let progress = Math.max(0, Math.min((scrollY - minScroll) / (maxScroll - minScroll), 1));
+
+            // 이징 처리: 느리게 시작해서 빠르게 증가
+            const easedProgress = progress ** 2;
+
+            // 화면 너비 또는 높이 기준으로 최대 크기 계산
+            const maxSize = (scrollY > 3000 ? 5 : 2) * Math.max(window.innerWidth, window.innerHeight);
+            const newSize = easedProgress * maxSize;
+
+            setCircleSize(newSize);
+            localStorage.setItem("circleSize", newSize);
         };
+
+        const updateLeft = () => {
+            const minSize = 0;
+            const maxSize = window.innerWidth * 0.55;
+            const minLeft = 50;
+            const maxLeft = 55.9;
+
+            const t = Math.max(0, Math.min((circleSize - minSize) / (maxSize - minSize), 1));
+            const interpolated = maxLeft - (maxLeft - minLeft) * t;
+
+            setCircleLeft(interpolated);
+            localStorage.setItem("circleLeft", interpolated);
+        }
 
         const updateCirclePosition = () => {
             if (circleRef.current) {
@@ -42,14 +67,27 @@ function MainCover() {
             }
         };
 
-        const updateLeft =() => {
-            setCircleLeft(Math.max(Math.min(65 - circleSize * 0.015, 59.1), 50));
-            localStorage.setItem("circleLeft", Math.max(Math.min(65 - circleSize * 0.015, 59.1), 50));
+        const updateLogoUpDown = () => {
+            const minScroll = 3000;
+            const maxScroll = 4000;
+            if (scrollY >= minScroll && maxScroll <= 4000) {
+                // 스크롤이 최소에서 최대 사이일 때
+                const normalizedScroll = (scrollY - minScroll) / (maxScroll - minScroll); // 0에서 1 사이로 정규화
+                const interpolatedY = -12 + ((-78 - (-12)) * normalizedScroll); // -12%에서 -50%로 보간
+                setLogoUpDown(interpolatedY);
+            } else if (scrollY < minScroll) {
+                // 스크롤이 최소 미만일 때
+                setLogoUpDown(-12);
+            } else {
+                // 스크롤이 최대 초과일 때
+                setLogoUpDown(-78);
+            }
         }
 
         updateCircleSize();
-        updateCirclePosition();
         updateLeft();
+        updateCirclePosition();
+        updateLogoUpDown();
 
         window.addEventListener('scroll', handleScroll);
         window.addEventListener('resize', handleResize);
@@ -70,7 +108,11 @@ function MainCover() {
                 circlePosition={circlePosition} 
             />
             <Center>
-                <LogoWrapper>
+                <LogoWrapper
+                    style={{
+                        transform: `translate(-50%, ${logoUpDown}%)`,
+                    }}    
+                >
                     <SmileLogo/>
                     <Shadow 
                         circleSize={circleSize} 
@@ -82,15 +124,12 @@ function MainCover() {
                     <Circle
                         ref={circleRef}
                         style={{
-                            width: circleSize,
-                            height: circleSize,
+                            width: circleSize-1,
+                            height: circleSize-1,
                             borderWidth: borderWidth,
                             left: `${circleLeft}%`,
                         }}
                     />
-                    <LogoLineWrapper>
-                        <SmileLogoLine/>
-                    </LogoLineWrapper>
                 </LogoWrapper>
             </Center>
             <SidebarRight
@@ -106,7 +145,7 @@ const Container = styled.div`
     top: 0;
     left: 0;
     width: 100vw;
-    height: 200vh;
+    height: 100vh;
     display: flex;
     justify-content: space-between;
     background-color:rgb(0, 0, 0);
@@ -117,22 +156,13 @@ const Center = styled.div`
     background-color:rgb(252, 255, 226);
 `;
 
-const LogoWrapper = styled.div`
+const LogoWrapper = styled(motion.div)`
     position: relative;
-    top: 25%;
-    left: 51.5%;
-    width: 57%;
-    aspect-ratio: 423.1 / 257.1;
-    transform: translate(-50%, -50%);
-`;
-
-const LogoLineWrapper = styled.div`
-    position: absolute;
-    top: 19.5%;
-    transform: translateX(-50%);
-    left: 48.5%;
-    width: 173%;
-    aspect-ratio: 732.05 / 1259.83;
+    left: 50%;
+    top: 50%;
+    width: 90%;
+    aspect-ratio: 732.05 / 1314.73;
+    transform: translate(-50%, -12%);
 `;
 
 const SidebarLeft = styled.div`
@@ -161,7 +191,7 @@ const SidebarRight = styled.div`
 
 const Circle = styled(motion.div)`
     position: absolute;
-    top: 31%;
+    top: 6.1%;
     background-color: transparent;
     transform: translate(-50%, -50%);
     border-radius: 50%;
@@ -174,7 +204,7 @@ const Shadow = styled.div`
     height: 100%;
     clip-path: ${(props) =>
         props.circleSize >= 0
-            ? `circle(${props.circleSize / 2}px at ${props.circleLeft}% ${31}%)`
+            ? `circle(${props.circleSize / 2}px at ${props.circleLeft}% ${6.1}%)`
             : 'none'};
 `
 
