@@ -34,7 +34,12 @@ function MainCover() {
             let progress = Math.max(0, Math.min((scrollY - minScroll) / (maxScroll - minScroll), 1));
 
             // 이징 처리: 느리게 시작해서 빠르게 증가
-            const easedProgress = progress ** 2;
+            let easedProgress;
+            if (progress <= 0.5) {
+                easedProgress = 0.5 * progress;       // y = (1/2)x
+            } else {
+                easedProgress = progress ** 2;        // y = x²
+            }
 
             // 화면 너비 또는 높이 기준으로 최대 크기 계산
             const maxSize = (scrollY > 3000 ? 5 : 2) * Math.max(window.innerWidth, window.innerHeight);
@@ -48,10 +53,12 @@ function MainCover() {
             const minSize = 0;
             const maxSize = window.innerWidth * 0.55;
             const minLeft = 50;
-            const maxLeft = 55.9;
+            const maxLeft = 60;
 
             const t = Math.max(0, Math.min((circleSize - minSize) / (maxSize - minSize), 1));
-            const interpolated = maxLeft - (maxLeft - minLeft) * t;
+            let interpolated = maxLeft - (maxLeft - minLeft) * t;
+
+            interpolated = Math.min(interpolated, 55.9);
 
             setCircleLeft(interpolated);
             localStorage.setItem("circleLeft", interpolated);

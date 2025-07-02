@@ -5,16 +5,22 @@ import "./logostyles.css";
 function SmileLogo(props) {
     const {scrollY} = useScroll();
     const pathRef = useRef(null);
-    const [opacity, setOpacity] = useState(0);
+    const [radius, setRadius] = useState(0);
     
     useEffect(() => {
       const handleScroll = () => {
         const scrollY = window.scrollY;
+        const minScroll = 1350;
+        const maxScroll = 1400;
 
-        if (scrollY >= 1350) {
-          setOpacity(1); // 스크롤이 1300을 넘으면 원이 보임
+        if (scrollY < minScroll) {
+          setRadius(0);
+        } else if (scrollY > maxScroll) {
+          setRadius(7.87); // 원하는 최대 반지름
         } else {
-          setOpacity(0); // 스크롤이 1300 미만이면 원이 보이지 않음
+          // 0~1 사이로 정규화
+          const t = (scrollY - minScroll) / (maxScroll - minScroll);
+          setRadius(t * 7.87);
         }
       };
 
@@ -22,9 +28,9 @@ function SmileLogo(props) {
       return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
-    const dashOffset1 = useTransform(scrollY,[0, 100],[64, 0]);
-    const dashOffset2 = useTransform(scrollY,[100, 200],[416, 0]);
-    const dashOffset3 = useTransform(scrollY,[200, 300],[-200, 0]);
+    const dashOffset1 = useTransform(scrollY,[0, 100],[416, 0]);
+    const dashOffset2 = useTransform(scrollY,[100, 200],[-200, 0]);
+    const dashOffset3 = useTransform(scrollY,[200, 300],[64, 0]);
     const dashOffset4 = useTransform(scrollY,[300, 400],[207, 0]);
     const dashOffset5 = useTransform(scrollY,[400, 500],[163, 0]);
     const dashOffset6 = useTransform(scrollY,[500, 625],[481, 0]);
@@ -138,43 +144,43 @@ function SmileLogo(props) {
                     className="u"
                     x1="261.79" y1="1.1" x2="325.79" y2="1.1"
                     strokeDasharray="64"
-                    style={{ strokeDashoffset: dashOffset1 }}
+                    style={{ strokeDashoffset: dashOffset3 }}
                 />
                 <motion.line
                     className="u"
                     x1="161.12" y1="51.1" x2="577.12" y2="51.1"
                     strokeDasharray="416"
-                    style={{ strokeDashoffset: dashOffset2 }}
+                    style={{ strokeDashoffset: dashOffset1 }}
                 />
                 <motion.line
                     className="u"
                     x1="161.12" y1="101.1" x2="577.12" y2="101.1"
                     strokeDasharray="416"
-                    style={{ strokeDashoffset: dashOffset2 }}
+                    style={{ strokeDashoffset: dashOffset1 }}
                 />
                 <motion.line
                     className="u"
                     x1="161.12" y1="151.1" x2="577.12" y2="151.1"
                     strokeDasharray="416"
-                    style={{ strokeDashoffset: dashOffset2 }}
+                    style={{ strokeDashoffset: dashOffset1 }}
                 />
                 <motion.line
                     className="u"
                     x1="161.12" y1="201.1" x2="577.12" y2="201.1"
                     strokeDasharray="416"
-                    style={{ strokeDashoffset: dashOffset2 }}
+                    style={{ strokeDashoffset: dashOffset1 }}
                 />
                 <motion.line
                     className="u"
                     x1="161.12" y1="251.1" x2="577.12" y2="251.1"
                     strokeDasharray="416"
-                    style={{ strokeDashoffset: dashOffset2 }}
+                    style={{ strokeDashoffset: dashOffset1 }}
                 />
                 <motion.line
                     className="w"
                     x1="577.12" y1="251.1" x2="577.12" y2="51.1"
                     strokeDasharray="200"
-                    style={{ strokeDashoffset: dashOffset3 }}
+                    style={{ strokeDashoffset: dashOffset2 }}
                 />
             </motion.g>
             <motion.g id="큰글씨">
@@ -245,8 +251,8 @@ function SmileLogo(props) {
                     ref={pathRef}
                     id="주황색 i"
                     className="z"
-                    cx="409.61" cy="80.77" r="7.87"
-                    opacity={opacity} // 투명도
+                    cx="409.61" cy="80.77"
+                    r={radius}
                 />
             </motion.g>
             <motion.g id="작은글씨">
